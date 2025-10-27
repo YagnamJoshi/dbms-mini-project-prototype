@@ -1,13 +1,31 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ club.clubName }} Details</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>{{ club.clubName }}</h1>
+        <nav><a href="/clubs">Back to Clubs</a></nav>
+    </header>
 
-{% block content %}
-<h2>{{ club_name }} — Details</h2>
+    <main>
+        <h2>Club Information</h2>
+        <p><strong>Secretary:</strong> {{ club.clubSecretary }}</p>
+        <p><strong>Department:</strong> {{ club.departmentName }}</p>
+        <p><strong>Faculty Advisor:</strong> {{ club.facultyAdvisor }}</p>
 
-{% for d in details %}
-<div class="card">
-    <p><strong>Secretary:</strong> {{ d[2] }}</p>
-    <p><strong>Faculty ID:</strong> {{ d[3] }}</p>
-    <p><strong>Department ID:</strong> {{ d[4] }}</p>
-</div>
-{% endfor %}
-{% endblock %}
+        <h2>Members</h2>
+        <ul>
+            {% for m in members %}
+                <li>{{ m.studentName }}</li>
+            {% endfor %}
+        </ul>
+    </main>
+
+    <footer>
+        Mini Project by Yagnam, Sharath, Shivani
+    </footer>
+</body>
+</html>

@@ -1,20 +1,38 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Clubs</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>Clubs</h1>
+        <nav><a href="/">Home</a></nav>
+    </header>
 
-{% block content %}
-<h2>All Clubs</h2>
+    <main>
+        <table>
+            <tr>
+                <th>Club Name</th>
+                <th>Secretary</th>
+                <th>Department</th>
+                <th>Faculty Advisor</th>
+                <th>Members</th>
+            </tr>
+            {% for c in clubs %}
+            <tr>
+                <td><a href="/club/{{ c.clubName }}">{{ c.clubName }}</a></td>
+                <td>{{ c.clubSecretary }}</td>
+                <td>{{ c.departmentName }}</td>
+                <td>{{ c.facultyAdvisor }}</td>
+                <td>{{ c.totalMembers }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </main>
 
-{% if search_query %}
-<p>Search results for: <b>{{ search_query }}</b></p>
-{% endif %}
-
-<ul class="card-list">
-{% for c in clubs %}
-    <li class="card">
-        <h3><a href="{{ url_for('club_detail', club_name=c[1]) }}">{{ c[1] }}</a></h3>
-        <p><strong>Secretary:</strong> {{ c[2] }}</p>
-        <p><strong>Faculty ID:</strong> {{ c[3] }}</p>
-        <p><strong>Department ID:</strong> {{ c[4] }}</p>
-    </li>
-{% endfor %}
-</ul>
-{% endblock %}
+    <footer>
+        Mini Project by Yagnam, Sharath, Shivani
+    </footer>
+</body>
+</html>

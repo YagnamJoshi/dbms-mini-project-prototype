@@ -146,3 +146,30 @@ INSERT INTO student_club_details (PRN, clubID) VALUES
 (3015, 303),
 (3016, 304),
 (3017, 304);
+
+
+USE college_db;
+
+DROP PROCEDURE IF EXISTS getClubInfo;
+
+DELIMITER $$
+
+CREATE PROCEDURE getClubInfo()
+BEGIN
+SELECT 
+c.clubID,
+c.clubName,
+c.clubSecretary,
+d.departmentName,
+f.facultyName AS facultyAdvisor,
+COUNT(s.PRN) AS totalMembers
+FROM club c
+JOIN department d ON c.departmentID = d.departmentID
+JOIN faculty f ON c.facultyID = f.facultyID
+LEFT JOIN student_club_details scd ON c.clubID = scd.clubID
+LEFT JOIN student s ON s.PRN = scd.PRN
+GROUP BY c.clubID, c.clubName, c.clubSecretary, d.departmentName, f.facultyName
+ORDER BY c.clubName;
+END$$
+
+DELIMITER ;
