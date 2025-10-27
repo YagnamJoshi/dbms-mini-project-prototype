@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Events</h2>
+
+<ul class="card-list">
+{% for e in events %}
+    <li class="card">
+        <h3>{{ e[1] }}</h3>
+        <p><strong>Start Date:</strong> {{ e[2] }}</p>
+        <p><strong>End Date:</strong> {{ e[3] }}</p>
+        <p><strong>Club ID:</strong> {{ e[4] }}</p>
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}

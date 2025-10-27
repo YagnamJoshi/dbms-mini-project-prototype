@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Club Information Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Student Club Information Portal</h1>
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('clubs') }}">Clubs</a>
+            <a href="{{ url_for('events') }}">Events</a>
+            <form action="{{ url_for('search') }}" method="get" class="search-bar">
+                <input type="text" name="q" placeholder="Search clubs..." required>
+            </form>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>Mini Project by <strong>Yagnam</strong>, <strong>Sharath</strong>, <strong>Shivani</strong> © 2025</p>
+    </footer>
+</body>
+</html>

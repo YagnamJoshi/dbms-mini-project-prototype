@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ club_name }} — Details</h2>
+
+{% for d in details %}
+<div class="card">
+    <p><strong>Secretary:</strong> {{ d[2] }}</p>
+    <p><strong>Faculty ID:</strong> {{ d[3] }}</p>
+    <p><strong>Department ID:</strong> {{ d[4] }}</p>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>All Clubs</h2>
+
+{% if search_query %}
+<p>Search results for: <b>{{ search_query }}</b></p>
+{% endif %}
+
+<ul class="card-list">
+{% for c in clubs %}
+    <li class="card">
+        <h3><a href="{{ url_for('club_detail', club_name=c[1]) }}">{{ c[1] }}</a></h3>
+        <p><strong>Secretary:</strong> {{ c[2] }}</p>
+        <p><strong>Faculty ID:</strong> {{ c[3] }}</p>
+        <p><strong>Department ID:</strong> {{ c[4] }}</p>
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}

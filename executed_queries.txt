@@ -1,0 +1,148 @@
+CREATE DATABASE mini_project;
+USE mini_project;
+
+-- DDL queries for TABLES
+
+CREATE TABLE department (
+departmentID INT PRIMARY KEY,
+departmentName VARCHAR(100) NOT NULL,
+location VARCHAR(100)
+);
+
+CREATE TABLE student (
+PRN INT PRIMARY KEY,
+studentName VARCHAR (100),
+studentEmail VARCHAR (150),
+departmentID INT,
+FOREIGN KEY (departmentID) REFERENCES department(departmentID) ON DELETE CASCADE
+);
+
+CREATE TABLE faculty(
+facultyID INT PRIMARY KEY,
+facultyName VARCHAR(100),
+facultyEmail VARCHAR(150),
+departmentID INT,
+FOREIGN KEY (departmentID) REFERENCES department(departmentID) ON DELETE CASCADE
+);
+
+CREATE TABLE club (
+clubID INT PRIMARY KEY,
+clubName VARCHAR(100),
+clubSecretary VARCHAR(100),
+facultyID INT,
+departmentID INT,
+FOREIGN KEY (facultyID) REFERENCES faculty(facultyID),
+FOREIGN KEY (departmentID) REFERENCES department(departmentID)
+);
+
+CREATE TABLE student_club_details (
+PRN INT,
+clubID INT,
+FOREIGN KEY (PRN) REFERENCES student(PRN) ON DELETE CASCADE,
+FOREIGN KEY (clubID) REFERENCES club(clubID) ON DELETE CASCADE
+);
+
+CREATE TABLE event (
+eventID INT PRIMARY KEY,
+title VARCHAR(150),
+startDate DATE,
+endDate DATE,
+clubID INT,
+FOREIGN KEY (clubID) REFERENCES club(clubID) ON DELETE CASCADE
+);
+
+
+
+-- ===== Department Table =====
+INSERT INTO department (departmentID, departmentName, location) VALUES
+(1, 'Computer Science & Engineering', 'Block A'),
+(2, 'Electronics & Communication', 'Block B'),
+(3, 'Information Technology', 'Block C'),
+(4, 'Mechanical Engineering', 'Block D');
+
+-- ===== Student Table =====
+INSERT INTO student (PRN, studentName, studentEmail, departmentID) VALUES
+(101, 'Yagnam Joshi', 'yagnam.joshi@college.edu', 1),
+(102, 'Riya Mehta', 'riya.mehta@college.edu', 2),
+(103, 'Aman Patel', 'aman.patel@college.edu', 3),
+(104, 'Sneha Rao', 'sneha.rao@college.edu', 1),
+(105, 'Arjun Nair', 'arjun.nair@college.edu', 4);
+
+-- ===== Faculty Table =====
+INSERT INTO faculty (facultyID, facultyName, facultyEmail, departmentID) VALUES
+(201, 'Dr. R. Sharma', 'rsharma@college.edu', 1),
+(202, 'Prof. M. Gupta', 'mgupta@college.edu', 2),
+(203, 'Dr. L. Desai', 'ldesai@college.edu', 3),
+(204, 'Prof. S. Menon', 'smenon@college.edu', 4);
+
+-- ===== Club Table =====
+INSERT INTO club (clubID, clubName, clubSecretary, facultyID, departmentID) VALUES
+(301, 'CodeCraft Club', 'Yagnam Joshi', 201, 1),
+(302, 'CircuitX Club', 'Riya Mehta', 202, 2),
+(303, 'TechTrek Club', 'Aman Patel', 203, 3),
+(304, 'MechVerse', 'Arjun Nair', 204, 4);
+
+-- ===== Student_Club_Details =====
+INSERT INTO student_club_details (PRN, clubID) VALUES
+(101, 301),
+(104, 301),
+(102, 302),
+(103, 303),
+(105, 304);
+
+-- ===== Event Table =====
+INSERT INTO event (eventID, title, startDate, endDate, clubID) VALUES
+(401, 'Hackathon 2025', '2025-09-10', '2025-09-12', 301),
+(402, 'IoT Innovation Day', '2025-08-20', '2025-08-21', 302),
+(403, 'AI & ML Symposium', '2025-10-05', '2025-10-06', 303),
+(404, 'RoboWars', '2025-07-15', '2025-07-16', 304);
+
+
+DELIMITER $$
+
+CREATE PROCEDURE get_all_clubs()
+BEGIN
+    SELECT * FROM club;
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+-- 1️⃣ Get all events (past + upcoming)
+CREATE PROCEDURE get_all_events()
+BEGIN
+    SELECT eventID, title, startDate, endDate, clubID
+    FROM event
+    ORDER BY startDate DESC;
+END$$
+
+
+-- 2️⃣ Get specific club details (by club name)
+CREATE PROCEDURE get_club_details(IN club_name VARCHAR(100))
+BEGIN
+    SELECT * FROM club WHERE clubName = club_name;
+END$$
+
+DELIMITER ;
+
+
+INSERT INTO student (PRN, studentName, studentEmail, departmentID) VALUES
+(3010, 'Tanya Verma', 'tanya.verma@college.edu', 1),
+(3011, 'Harsh Sharma', 'harsh.sharma@college.edu', 1),
+(3012, 'Priya Iyer', 'priya.iyer@college.edu', 2),
+(3013, 'Vikram Rao', 'vikram.rao@college.edu', 2),
+(3014, 'Rachit Agarwal', 'rachit.agarwal@college.edu', 3),
+(3015, 'Manav Shetty', 'manav.shetty@college.edu', 3),
+(3016, 'Simran Kaur', 'simran.kaur@college.edu', 4),
+(3017, 'Devansh Joshi', 'devansh.joshi@college.edu', 4);
+
+INSERT INTO student_club_details (PRN, clubID) VALUES
+(3010, 301),
+(3011, 301),
+(3012, 302),
+(3013, 302),
+(3014, 303),
+(3015, 303),
+(3016, 304),
+(3017, 304);
